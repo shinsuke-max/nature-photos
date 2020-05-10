@@ -8,4 +8,13 @@ html
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   body
-    = yield
+    .app-title.navbar.navbar-expand-md.navbar-light.bg-light
+      .navbar-brand NaturePhotos
+    .container
+      - if flash[:notice]
+        div.alert.alert-info
+          = flash[:notice]
+      - if flash[:alert]
+        div.alert.alert-danger
+          = flash[:alert]
+      = yield
