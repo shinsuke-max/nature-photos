@@ -1,2 +1,3 @@
 - @posts.each do |post|
   p= post.content
+  = image_tag post.image.variant(resize:'500x500') if post.image.attached?
