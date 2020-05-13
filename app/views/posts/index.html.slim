@@ -1,3 +1,3 @@
-- @posts.each do |post|
-  p= post.content
-  = image_tag post.image.variant(resize:'500x500') if post.image.attached?
+.container.post-list
+  .row.post-list__items
+    = render partial: 'posts', locals: { posts: @posts }

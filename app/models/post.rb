@@ -7,5 +7,6 @@ class Post < ApplicationRecord
   validates :image,   content_type: { in: %w[image/jpeg image/gif image/png],
                                       message: "この拡張子は無効です" },
                       size:         { less_than: 5.megabytes,
-                                      message: "サイズが大きいです" }
+                                      message: "サイズが大きいです" },
+                      presence: true
 end
