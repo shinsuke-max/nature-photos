@@ -70,3 +70,4 @@ gem 'active_storage_validations', '0.8.2'
 gem 'image_processing'
 gem 'mini_magick'
 gem 'aws-sdk-s3',              '1.46.0', require: false
+gem 'faker'
