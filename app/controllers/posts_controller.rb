@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user!, only: %i(show new create destroy)
+  before_action :authenticate_user!, only: %i(show new create edit update destroy)
   def index
     @posts = Post.limit(6).order('created_at DESC')
   end
@@ -22,6 +22,21 @@ class PostsController < ApplicationController
       redirect_to root_path
       flash[:alert] = "投稿に失敗しました"
     end
+  end
+
+  def edit
+    @post = Post.find_by(id: params[:id])
+  end
+
+  def update
+    @post = Post.find_by(id: params[:id])
+    if @post.user == current_user
+      @post.update(post_params)
+      flash[:notice] = "投稿が更新されました"
+    else
+      flash[:alert] = "投稿の更新に失敗しました"
+    end
+    redirect_to @post
   end
 
   def destroy

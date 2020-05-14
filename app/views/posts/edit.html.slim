@@ -1,8 +1,8 @@
-= form_with model: @post do |f|
+= form_with model: @post, local: true do |f|
   .form-group.mt-3
     = f.label :content, 'キャプション'
     = f.text_field :content, class: 'form-control'
   .form-group
     = f.label :image, '画像'
     = f.file_field :image, accept: "image/jpeg,image/gif,image/png", class: 'form-control'
-  = f.submit "投稿", class: "btn btn-primary"
+  = f.submit "編集", class: "btn btn-primary"
