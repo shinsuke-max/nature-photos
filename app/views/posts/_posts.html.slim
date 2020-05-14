@@ -1,5 +1,6 @@
 - posts.each do |post|
   .col-md-4.post-list__items__item
-    = image_tag post.image, class: 'post-list__items__item__image' if post.image.attached?
-    .post-list__items__item_text
-      = post.content
+    = link_to post_path(post.id) do
+      = image_tag post.image, class: 'post-list__items__item__image' if post.image.attached?
+      .post-list__items__item_text
+        = post.content

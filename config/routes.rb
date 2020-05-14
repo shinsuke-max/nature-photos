@@ -3,5 +3,5 @@ Rails.application.routes.draw do
     controllers: { registrations: 'registrations' }
   root 'posts#index'
   get '/users/:id', to: 'users#show', as: 'user'
-  resources :posts, only: %i(index new create)
+  resources :posts, only: %i(index show new create destroy)
 end
