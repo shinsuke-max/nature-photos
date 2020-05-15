@@ -6,11 +6,28 @@ h1.mt-3 投稿の詳細
 table.table.table-hover
   tbody
     tr
+      th キャプション
+      td= @post.content
+    tr
       th 画像
       td= image_tag @post.image.variant(resize: "900x900") if @post.image.attached?
     tr
-      th キャプション
-      td= @post.content
+      th いいね！
+      td 40いいね！
+    tr
+      th コメント一覧
+      td
+        - @comments.each do |c|
+          li= c.comment
+            div= c.user.name
+    tr
+      th 新規コメント作成
+      td
+        = form_with model: [@post, Comment.new] do |f|
+          = f.hidden_field :user_id, value: current_user.id
+          = f.hidden_field :post_id, value: @post.id
+          = f.text_field :comment, class: "form-control", placeholder: "コメント ...", autocomplete: :off
+          = f.submit "コメントする", class: "btn btn-primary mt-3"
     tr
       th 作成日時
       td= @post.created_at
