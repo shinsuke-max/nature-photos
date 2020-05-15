@@ -3,5 +3,7 @@ Rails.application.routes.draw do
     controllers: { registrations: 'registrations' }
   root 'posts#index'
   get '/users/:id', to: 'users#show', as: 'user'
-  resources :posts
+  resources :posts do
+    resources :comments, only: %i(create destroy)
+  end
 end
