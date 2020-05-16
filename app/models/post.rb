@@ -11,4 +11,8 @@ class Post < ApplicationRecord
                       size:         { less_than: 5.megabytes,
                                       message: "サイズが大きいです" },
                       presence: true
+
+  def liked_by(user)
+    Like.find_by(user_id: user.id, post_id: id)
+  end
 end

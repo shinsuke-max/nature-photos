@@ -7,6 +7,7 @@ class CommentsController < ApplicationController
       redirect_to @post
       flash[:notice] = "コメントしました"
     else
+      redirect_to @post
       flash[:alert] = "コメントに失敗しました"
     end
   end

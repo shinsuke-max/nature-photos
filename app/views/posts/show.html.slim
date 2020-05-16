@@ -12,8 +12,14 @@ table.table.table-hover
       th 画像
       td= image_tag @post.image.variant(resize: "900x900") if @post.image.attached?
     tr
-      th いいね！
-      td 40いいね！
+      th
+        - if @post.liked_by(current_user).present?
+          = link_to "いいね！を取り消す", post_like_path(@post.id, @post.liked_by(current_user)), method: :DELETE
+        - else
+          = link_to "いいね！する", post_likes_path(@post), method: :POST
+      td
+        = @like.count
+        |  いいね！
     tr
       th コメント一覧
       td
