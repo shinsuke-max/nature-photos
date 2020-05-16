@@ -4,7 +4,7 @@
     nav
       ul.nav.navbar-nav.navbar-right
         - if user_signed_in?
-          li= link_to "投稿", new_post_path, class: "btn btn-primary mr-3"
+          li= link_to "投稿", new_post_path, class: "mr-3"
           li= link_to "投稿一覧", posts_path
           li.dropdown.ml-2
             a[href="#" class="dropdown-toggle" data-toggle="dropdown"]
