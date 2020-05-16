@@ -1,6 +1,9 @@
 - provide(:title, "投稿詳細")
 
 h1.mt-3 投稿の詳細
+h2.mt-3
+  = @post.user.name
+  |  さんの投稿
 
 .nav.justify-content-end
   = link_to '一覧', root_path, class: 'nav-link'
