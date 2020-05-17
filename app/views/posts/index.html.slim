@@ -1,4 +1,17 @@
 - provide(:title, "投稿一覧")
+
+= search_form_for @q, class: 'mt-5 mb-5' do |f|
+  .form-group.row
+    = f.label :content_cont, 'キャプションから検索', class: 'col-sm-2 col-form-label'
+    .col-sm-10
+      = f.search_field :content_cont, class: 'form-control'
+  .form-group
+    = f.submit class: 'btn btn-outline-primary'
+
+.mb-3
+  = paginate @posts
+  = page_entries_info @posts
+
 .container.post-list
   .row.post-list__items
     = render partial: 'posts', locals: { posts: @posts }

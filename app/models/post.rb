@@ -15,4 +15,12 @@ class Post < ApplicationRecord
   def liked_by(user)
     Like.find_by(user_id: user.id, post_id: id)
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    %w[content]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    []
+  end
 end
