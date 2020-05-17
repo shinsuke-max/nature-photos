@@ -40,7 +40,7 @@ table.table.table-hover
           = f.submit "コメントする", class: "btn btn-primary mt-3"
     tr
       th 作成日時
-      td= @post.created_at
+      td= @post.created_at.to_s(:datetime_jp)
 
 - if @post.user == current_user
   = link_to '編集', edit_post_path(@post), class: 'btn btn-primary mr-3 mb-3'

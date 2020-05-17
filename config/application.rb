@@ -22,5 +22,6 @@ module NaturePhotos
                        routing_specs: false,
                        controller_specs: false
     end
+    config.time_zone = 'Tokyo'
   end
 end
