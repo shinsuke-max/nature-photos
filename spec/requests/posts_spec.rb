@@ -13,6 +13,24 @@ RSpec.describe "Posts", type: :request do
     end
   end
 
+  describe "new" do
+    context "as an authorized user" do
+      it "responds successfully" do
+        user = create(:user)
+        sign_in user
+        get new_post_path
+        expect(response).to be_success
+      end
+    end
+
+    context "as a guest" do
+      it "redirects to the sign_in page" do
+        get new_post_path
+        expect(response).to redirect_to new_user_session_path
+      end
+    end
+  end
+
   describe "#show" do
     context "as an authorized user" do
       before do
@@ -34,7 +52,7 @@ RSpec.describe "Posts", type: :request do
         @post = create(:post, user_id: other_user.id)
       end
 
-      it "redirects to the dashboard" do
+      it "responds successfully" do
         sign_in @user
         get post_path(id: @post.id)
         expect(response).to be_success
@@ -49,7 +67,7 @@ RSpec.describe "Posts", type: :request do
       end
 
       context "with valid attributes" do
-        it "adds a project" do
+        it "adds a post" do
           post = attributes_for(:post)
           sign_in @user
           expect {
@@ -59,7 +77,7 @@ RSpec.describe "Posts", type: :request do
       end
 
       context "with invalid attributes" do
-        it "does not add a project" do
+        it "does not add a post" do
           post = attributes_for(:post, content: nil)
           sign_in @user
           expect {
@@ -91,7 +109,7 @@ RSpec.describe "Posts", type: :request do
         @post = create(:post, user_id: @user.id)
       end
 
-      it "updates a project" do
+      it "updates a post" do
         post = attributes_for(:post, content: "Update Post yeah!")
         sign_in @user
         patch post_path(@post), params: { post: post }
@@ -106,14 +124,14 @@ RSpec.describe "Posts", type: :request do
         @post = create(:post, user_id: other_user.id, content: "Test Update")
       end
 
-      it "does not update the project" do
+      it "does not update the post" do
         post = attributes_for(:post, content: "Update yes yes yes!")
         sign_in @user
         patch post_path(@post), params: { post: post }
         expect(@post.reload.content).to eq "Test Update"
       end
 
-      it "redirects to the dashboard" do
+      it "redirects to the post#show" do
         post = attributes_for(:post, content: "Update yes yes yes!")
         sign_in @user
         patch post_path(@post), params: { post: post }
@@ -141,62 +159,63 @@ RSpec.describe "Posts", type: :request do
     end
   end
 
-#  describe "#destroy" do
-#    context "as an authorized user" do
-#      before do
-#        @user = FactoryBot.create(:user)
-#        @project = FactoryBot.create(:project, owner: @user)
-#      end
-#
-#      it "deletes a project" do
-#        sign_in @user
-#        expect {
-#          delete :destroy, params: { id: @project.id }
-#        }.to change(@user.projects, :count).by(-1)
-#      end
-#    end
-#
-#    context "as an unauthorized user" do
-#      before do
-#        @user = FactoryBot.create(:user)
-#        other_user = FactoryBot.create(:user)
-#        @project = FactoryBot.create(:project, owner: other_user)
-#      end
-#
-#      it "does not delete the project" do
-#        sign_in @user
-#        expect {
-#          delete :destroy, params: { id: @project.id }
-#        }.to_not change(Project, :count)
-#      end
-#
-#      it "redirects to the dashboard" do
-#        sign_in @user
-#        delete :destroy, params: { id: @project.id }
-#        expect(response).to redirect_to root_path
-#      end
-#    end
-#
-#    context "as a guest" do
-#      before do
-#        @project = FactoryBot.create(:project)
-#      end
-#
-#      it "returns a 302 response" do
-#        delete :destroy, params: { id: @project.id }
-#        expect(response).to have_http_status "302"
-#      end
-#
-#      it "redirects to the sign-in page" do
-#        delete :destroy, params: { id: @project.id }
-#        expect(response).to redirect_to "/users/sign_in"
-#      end
-#
-#      it "does not delete the project" do
-#        expect {
-#          delete :destroy, params: { id: @project.id }
-#        }.to_not change(Project, :count)
-#      end
-#    end
-#  end
+  describe "#destroy" do
+    context "as an authorized user" do
+      before do
+        @user = create(:user)
+        @post = create(:post, user_id: @user.id)
+      end
+
+      it "deletes a post" do
+        sign_in @user
+        expect {
+          delete post_path(@post)
+        }.to change(@user.posts, :count).by(-1)
+      end
+    end
+
+    context "as an unauthorized user" do
+      before do
+        @user = create(:user)
+        other_user = create(:user)
+        @post = create(:post, user_id: other_user.id)
+      end
+
+      it "does not delete the post" do
+        sign_in @user
+        expect {
+          delete post_path(@post)
+        }.to_not change(Post, :count)
+      end
+
+      it "redirects to the post_path" do
+        sign_in @user
+        delete post_path(@post)
+        expect(response).to redirect_to root_path
+      end
+    end
+
+    context "as a guest" do
+      before do
+        user = create(:user)
+        @post = create(:post, user_id: user.id)
+      end
+
+      it "returns a 302 response" do
+        delete post_path(@post)
+        expect(response).to have_http_status "302"
+      end
+
+      it "redirects to the sign-in page" do
+        delete post_path(@post)
+        expect(response).to redirect_to new_user_session_path
+      end
+
+      it "does not delete the post" do
+        expect {
+          delete post_path(@post)
+        }.to_not change(Post, :count)
+      end
+    end
+  end
 end
