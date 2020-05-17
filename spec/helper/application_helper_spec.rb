@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe ApplicationHelper, type: :helper do
@@ -13,7 +15,7 @@ RSpec.describe ApplicationHelper, type: :helper do
     end
 
     it 'have the right title when title is hoge' do
-      expect(full_title("hoge")).to eq("hoge - Nature-Picture")
+      expect(full_title('hoge')).to eq('hoge - Nature-Picture')
     end
   end
 end
