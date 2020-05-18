@@ -1,5 +1,5 @@
 # capistranoのバージョン固定
-lock '3.4.0'
+lock '3.14.0'
 
 # デプロイするアプリケーション名
 set :application, 'nature-photos'
