@@ -29,7 +29,10 @@ table.table.table-hover
       th コメント一覧
       td
         - @comments.each do |c|
-          li= c.comment
+          - if c.user == current_user
+            li= link_to "#{c.comment}  (編集できます)", edit_post_comment_path(@post.id, c)
+          - else
+            li= c.comment
     tr
       th 新規コメント作成
       td
@@ -45,4 +48,4 @@ table.table.table-hover
 - if @post.user == current_user
   = link_to '編集', edit_post_path(@post), class: 'btn btn-primary mr-3 mb-3'
   = link_to '削除', @post, method: :delete,
-  data: { confirm: "この投稿を削除します．よろしいですか？" }, class: 'btn btn-primary mb-3'
+  data: { confirm: "この投稿を削除します．よろしいですか？" }, class: 'btn btn-danger mb-3'

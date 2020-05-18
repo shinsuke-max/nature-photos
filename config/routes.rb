@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   root 'posts#index'
   get '/users/:id', to: 'users#show', as: 'user'
   resources :posts do
-    resources :comments, only: %i(create destroy)
+    resources :comments, only: %i(create destroy edit update)
     resources :likes, only: %i(create destroy)
   end
 end

@@ -14,6 +14,24 @@ class CommentsController < ApplicationController
     end
   end
 
+  def edit
+    @comment = Comment.find_by(id: params[:id])
+    @post = @comment.post
+    redirect_to root_path unless @comment.user == current_user
+  end
+
+  def update
+    @comment = Comment.find_by(id: params[:id])
+    @post = @comment.post
+    if @comment.user == current_user
+      @comment.update!(comment_params)
+      flash[:notice] = 'コメントが更新されました'
+    else
+      flash[:alert] = 'コメントの更新に失敗しました'
+    end
+    redirect_to root_path
+  end
+
   def destroy
     @comment = Comment.find_by(id: params[:id])
     @post = @comment.post
