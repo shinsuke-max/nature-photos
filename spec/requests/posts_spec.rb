@@ -62,6 +62,52 @@ RSpec.describe 'Posts', type: :request do
     end
   end
 
+  describe '#edit' do
+    context 'as an authorized user' do
+      before do
+        @user = create(:user)
+        @post = create(:post, user_id: @user.id)
+      end
+
+      it 'responds successfully' do
+        sign_in @user
+        get edit_post_path(id: @post.id)
+        expect(response).to be_success
+      end
+    end
+
+    context 'as an unauthorized user' do
+      before do
+        @user = create(:user)
+        other_user = create(:user)
+        @post = create(:post, user_id: other_user.id)
+      end
+
+      it 'responds successfully' do
+        sign_in @user
+        get edit_post_path(id: @post.id)
+        expect(response).to be_success
+      end
+    end
+
+    context 'as a guest' do
+      before do
+        user  = create(:user)
+        @post = create(:post, user_id: user.id)
+      end
+
+      it 'returns a 302 response' do
+        get edit_post_path(id: @post.id)
+        expect(response).to have_http_status '302'
+      end
+
+      it 'redirects to the sign-in page' do
+        get edit_post_path(id: @post.id)
+        expect(response).to redirect_to new_user_session_path
+      end
+    end
+  end
+
   describe '#create' do
     context 'as an authenticated user' do
       before do
