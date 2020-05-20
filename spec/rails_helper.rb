@@ -9,6 +9,7 @@ if Rails.env.production?
   abort('The Rails environment is running in production mode!')
 end
 require 'rspec/rails'
+require 'capybara/rspec'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -67,4 +68,9 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
   config.include Devise::Test::IntegrationHelpers, type: :request
   config.include FactoryBot::Syntax::Methods
+  config.before(:each) do |example|
+    if example.metadata[:type] == :system
+      driven_by :selenium, using: :headless_chrome, screen_size: [1400, 1400]
+    end
+  end
 end
