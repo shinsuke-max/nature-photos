@@ -1,8 +1,8 @@
-h2
+h2.mt-3
   | かんたんログイン
 = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
   .field
     = f.hidden_field :email ,value: "test@example.com"
     = f.hidden_field :password ,value: "testtest"
   .actions
-    = f.submit "かんたんログイン"
+    = f.submit "かんたんログイン", class: 'btn btn-primary mt-3'
