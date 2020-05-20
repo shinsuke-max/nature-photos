@@ -14,4 +14,10 @@ RSpec.describe Post, type: :model do
     post.valid?
     expect(post.errors[:content]).to include('を入力してください')
   end
+
+  it 'is invalid too long content' do
+    post = build(:post, content: "a" * 256)
+    post.valid?
+    expect(post.errors[:content]).to include('は140文字以内で入力してください')
+  end
 end
