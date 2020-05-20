@@ -1,19 +1,24 @@
 - provide(:title, "ログイン")
 
-h1.mt-2 ログイン
+h1.mt-3 ログイン
 
-= form_with scope: resource, as: resource_name, url: session_path(resource_name), local: true do |f|
-  .form-group
-    = f.label :email, 'メールアドレス'
-    = f.text_field :email, class: 'form-control'
-  .form-group
-    = f.label :password, 'パスワード'
-    = f.password_field :password, class: 'form-control'
-  .form-check
-    = f.label :remember_me, class: 'form-check-label' do
-      = f.check_box :remember_me, class: 'form-check-input'
-      | ログインを記憶する
-  = f.submit 'ログインする', class: 'btn btn-primary mt-3 mb-3'
 
-= link_to '新規登録する', new_user_registration_path
-= render 'devise/sessions/testuser'
+.col-md-offset-2.mb-4.edit-profile-wrapper
+  .row
+    .col-md-8.mx-auto
+      .profile-form-wrap
+        = form_with scope: resource, as: resource_name, url: session_path(resource_name), local: true do |f|
+          .form-group
+            = f.label :email, 'メールアドレス'
+            = f.text_field :email, class: 'form-control'
+          .form-group
+            = f.label :password, 'パスワード'
+            = f.password_field :password, class: 'form-control'
+          .form-check
+            = f.label :remember_me, class: 'form-check-label' do
+              = f.check_box :remember_me, class: 'form-check-input'
+              | ログインを記憶する
+          = f.submit 'ログインする', class: 'btn btn-primary mt-3 mb-3'
+
+        = link_to '新規登録する', new_user_registration_path
+        = render 'devise/sessions/testuser'
