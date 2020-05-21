@@ -1,5 +1,6 @@
 # Nature-Picture
 自然風景の画像投稿アプリです<br>
+https://user-images.githubusercontent.com/57769038/82515221-b1277c80-9b52-11ea-83b5-6f4dce1af4ac.png
 
 # URL
 https://www.naturepictureapp.com/ <br>
