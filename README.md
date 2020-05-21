@@ -1,24 +1,43 @@
-# README
+# Nature-Picture
+自然風景の画像投稿アプリです<br>
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# URL
+https://www.naturepictureapp.com/ <br>
+非ログイン状態の場合は投稿一覧のみ可能です。ログインすると記事投稿やコメントが可能になります。<br>
+ログイン画面の「かんたんログイン」をクリックすると、メールアドレスとパスワードを入力せずにログインできます。
 
-Things you may want to cover:
+# 言語・使用技術
+#### フロント
+- slim
+- Scss
+- bootstrap4
 
-* Ruby version
+#### バックエンド
+- Ruby 2.5.1
+- Ruby on Rails 5.2.3
 
-* System dependencies
+#### サーバー
+- Nginx 1.16.1
 
-* Configuration
+#### DB
+- MySQL 5.5
 
-* Database creation
+#### インフラ・開発環境等
+- AWS（VPC, EC2, S3, Route 53, ALB, ACM）
+- Capistrano3
+- RSpec
 
-* Database initialization
+#### AWS構成図
+[![Image from Gyazo](https://i.gyazo.com/d589ba69eebf082b5ca05d36ef19b41e.png)](https://gyazo.com/d589ba69eebf082b5ca05d36ef19b41e)
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+# 実装機能
+- ユーザー機能
+  - deviseを使用
+  - 新規登録・ログイン・ログアウト機能
+  - マイページ・登録情報編集機能
+- 画像投稿機能
+  - active_storageを使用
+- コメント機能
+- 検索機能
+  - ransackを使用
+- ページネーション機能
