@@ -4,6 +4,10 @@ RSpec.describe Comment, type: :model do
   let(:user) { create(:user) }
   let(:post) { create(:post, user_id: user.id) }
 
+  it 'has a valid factory' do
+    expect(build(:comment)).to be_valid
+  end
+
   it 'is valid a comment' do
     comment = Comment.new(post_id: post.id, user_id: user.id, comment: "hogehoge")
     comment.valid?

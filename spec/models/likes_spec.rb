@@ -4,6 +4,10 @@ RSpec.describe Like, type: :model do
   let(:user) { create(:user) }
   let(:post) { create(:post, user_id: user.id) }
 
+  it 'has a valid factory' do
+    expect(build(:like)).to be_valid
+  end
+
   it 'is valid a like' do
     like = Like.new(post_id: post.id, user_id: user.id)
     like.valid?
