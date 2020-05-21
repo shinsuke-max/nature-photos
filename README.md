@@ -1,6 +1,5 @@
 # Nature-Picture
 自然風景の画像投稿アプリです<br>
-https://user-images.githubusercontent.com/57769038/82515221-b1277c80-9b52-11ea-83b5-6f4dce1af4ac.png
 
 # URL
 https://www.naturepictureapp.com/ <br>
@@ -29,7 +28,7 @@ https://www.naturepictureapp.com/ <br>
 - RSpec
 
 #### AWS構成図
-[![Image from Gyazo](https://i.gyazo.com/d589ba69eebf082b5ca05d36ef19b41e.png)](https://gyazo.com/d589ba69eebf082b5ca05d36ef19b41e)
+![awskouseizu](https://user-images.githubusercontent.com/57769038/82515221-b1277c80-9b52-11ea-83b5-6f4dce1af4ac.png)
 
 # 実装機能
 - ユーザー機能
