@@ -29,7 +29,7 @@ class CommentsController < ApplicationController
     else
       flash[:alert] = 'コメントの更新に失敗しました'
     end
-    redirect_to root_path
+    redirect_to @post
   end
 
   def destroy
