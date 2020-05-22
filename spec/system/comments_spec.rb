@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe "Comments", type: :system do
-
   it "user creates a new comment" do
     user = create(:user)
     post = create(:post)
@@ -12,14 +11,14 @@ RSpec.describe "Comments", type: :system do
     fill_in "パスワード", with: user.password
     click_button "ログインする"
 
-    expect {
+    expect do
       visit post_path(post)
       fill_in 'comment[comment]', with: "Test Comment"
       click_button "コメントする"
 
       expect(page).to have_content "コメントしました"
       expect(page).to have_content "Test Comment"
-    }.to change(user.comments, :count).by(1)
+    end.to change(user.comments, :count).by(1)
   end
 
   it "user edit a comment" do
@@ -33,7 +32,7 @@ RSpec.describe "Comments", type: :system do
     fill_in "パスワード", with: user.password
     click_button "ログインする"
 
-    expect {
+    expect do
       visit post_path(post)
       visit edit_post_comment_path(post.id, comment)
       fill_in "コメント", with: "Hoge"
@@ -41,7 +40,7 @@ RSpec.describe "Comments", type: :system do
 
       expect(page).to have_content "コメントが更新されました"
       expect(current_path).to eq root_path
-    }.to_not change(user.comments, :count)
+    end.not_to change(user.comments, :count)
   end
 
   it "user delete a comment" do
@@ -55,7 +54,7 @@ RSpec.describe "Comments", type: :system do
     fill_in "パスワード", with: user.password
     click_button "ログインする"
 
-    expect {
+    expect do
       visit post_path(post)
       visit edit_post_comment_path(post.id, comment)
 
@@ -65,6 +64,6 @@ RSpec.describe "Comments", type: :system do
 
       expect(page).to have_content "コメントが削除されました"
       expect(current_path).to eq root_path
-    }.to change(user.comments, :count).by(-1)
+    end.to change(user.comments, :count).by(-1)
   end
 end

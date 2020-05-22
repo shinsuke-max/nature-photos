@@ -11,13 +11,13 @@ RSpec.describe "likes", type: :system do
     fill_in "パスワード", with: user.password
     click_button "ログインする"
 
-    expect {
+    expect do
       visit post_path(post)
       click_link "いいね！する"
 
       expect(page).to have_content "いいね！しました"
       expect(page).to have_content "1 いいね！"
-    }.to change(user.likes, :count).by(1)
+    end.to change(user.likes, :count).by(1)
   end
 
   it "user delete a like" do
@@ -30,7 +30,7 @@ RSpec.describe "likes", type: :system do
     fill_in "パスワード", with: user.password
     click_button "ログインする"
 
-    expect {
+    expect do
       visit post_path(post)
       click_link "いいね！する"
 
@@ -41,7 +41,6 @@ RSpec.describe "likes", type: :system do
 
       expect(page).to have_content "いいねが取り消されました"
       expect(page).to have_content "0 いいね！"
-
-    }.to_not change(user.likes, :count)
+    end.not_to change(user.likes, :count)
   end
 end
