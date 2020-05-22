@@ -39,7 +39,7 @@ RSpec.describe "Comments", type: :system do
       click_button "編集"
 
       expect(page).to have_content "コメントが更新されました"
-      expect(current_path).to eq root_path
+      expect(current_path).to eq post_path(post)
     end.not_to change(user.comments, :count)
   end
 
