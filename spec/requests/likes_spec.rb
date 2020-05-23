@@ -119,7 +119,5 @@ RSpec.describe 'Likes', type: :request do
         end.not_to change(Like, :count)
       end
     end
-
-
   end
 end

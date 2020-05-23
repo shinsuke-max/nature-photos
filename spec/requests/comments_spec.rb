@@ -161,7 +161,9 @@ RSpec.describe 'Comments', type: :request do
     end
 
     context 'as an unauthorized user' do
+
       before { sign_in user }
+      
       it 'does not delete the comment' do
         expect do
           delete post_comment_path(post_id: post.id, id: other_comment.id)
@@ -175,13 +177,15 @@ RSpec.describe 'Comments', type: :request do
     end
 
     context 'as a guest' do
-      it 'returns a 302 response' do
+      before do
         delete post_comment_path(post_id: post.id, id: comment.id)
+      end
+
+      it 'returns a 302 response' do
         expect(response).to have_http_status '302'
       end
 
       it 'redirects to the sign-in page' do
-        delete post_comment_path(post_id: post.id, id: comment.id)
         expect(response).to redirect_to new_user_session_path
       end
 
