@@ -12,7 +12,7 @@ RSpec.describe 'Likes', type: :request do
           like = attributes_for(:like, post_id: post.id, user_id: user.id)
           sign_in user
           expect do
-            post post_likes_path(post_id: post.id), params: { like: like }
+            post post_likes_path(post_id: post.id), params: { like: like }, xhr: true
           end.to change(user.likes, :count).by(1)
         end
       end
@@ -24,7 +24,7 @@ RSpec.describe 'Likes', type: :request do
           like = attributes_for(:like, post_id: nil, user_id: nil)
           sign_in user
           expect do
-            post post_likes_path(post_id: post.id), params: { like: like }
+            post post_likes_path(post_id: post.id), params: { like: like }, xhr: true
           end.to_not change(user.comments, :count)
         end
       end
@@ -40,7 +40,7 @@ RSpec.describe 'Likes', type: :request do
         like = attributes_for(:like, post_id: post.id, user_id: other_user.id)
         sign_in user
         expect do
-          post post_likes_path(post_id: post.id), params: { like: like }
+          post post_likes_path(post_id: post.id), params: { like: like }, xhr: true
         end.to_not change(user.comments, :count)
       end
 
@@ -67,7 +67,7 @@ RSpec.describe 'Likes', type: :request do
         like = create(:like, user_id: user.id, post_id: post.id)
         sign_in user
         expect do
-          delete post_like_path(post_id: post.id, id: like.id)
+          delete post_like_path(post_id: post.id, id: like.id), xhr: true
         end.to change(user.likes, :count).by(-1)
       end
     end

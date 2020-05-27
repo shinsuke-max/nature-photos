@@ -15,7 +15,6 @@ RSpec.describe "likes", type: :system do
       visit post_path(post)
       click_link "いいね！する"
 
-      expect(page).to have_content "いいね！しました"
       expect(page).to have_content "1 いいね！"
     end.to change(user.likes, :count).by(1)
   end
@@ -34,12 +33,10 @@ RSpec.describe "likes", type: :system do
       visit post_path(post)
       click_link "いいね！する"
 
-      expect(page).to have_content "いいね！しました"
       expect(page).to have_content "1 いいね！"
 
       click_link "いいね！を取り消す"
 
-      expect(page).to have_content "いいねが取り消されました"
       expect(page).to have_content "0 いいね！"
     end.not_to change(user.likes, :count)
   end
