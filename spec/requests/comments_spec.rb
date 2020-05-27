@@ -8,7 +8,6 @@ RSpec.describe 'Comments', type: :request do
     end
 
     context 'as an authorized user' do
-
       before { sign_in @user }
 
       context 'with valid attributes' do
@@ -20,14 +19,13 @@ RSpec.describe 'Comments', type: :request do
         end
       end
 
-
       context 'with invalid attributes' do
         it 'does not add a comment' do
           comment = attributes_for(:comment, comment: nil, post_id: @post.id, user_id: @user.id)
           expect do
             post post_comments_path(post_id: @post.id),
-              params: { comment: comment }
-          end.to_not change(@user.comments, :count)
+                 params: { comment: comment }
+          end.not_to change(@user.comments, :count)
         end
       end
     end
@@ -39,8 +37,8 @@ RSpec.describe 'Comments', type: :request do
         sign_in @user
         expect do
           post post_comments_path(post_id: @post.id),
-            params: { comment: comment }
-        end.to_not change(@user.comments, :count)
+               params: { comment: comment }
+        end.not_to change(@user.comments, :count)
       end
     end
 
@@ -49,10 +47,9 @@ RSpec.describe 'Comments', type: :request do
         comment = attributes_for(:comment, post_id: @post.id, user_id: @user.id)
         expect do
           post post_comments_path(post_id: @post.id), params: { comment: comment }
-        end.to_not change(@user.comments, :count)
+        end.not_to change(@user.comments, :count)
       end
     end
-
   end
 
   describe '#update' do
@@ -65,7 +62,8 @@ RSpec.describe 'Comments', type: :request do
     context 'as an authorized user' do
       it 'updates a comment' do
         sign_in user
-        patch post_comment_path(post_id: post.id, id: comment.id), params: { comment: update_comment }
+        patch post_comment_path(post_id: post.id, id: comment.id),
+              params: { comment: update_comment }
         expect(comment.reload.comment).to eq 'Update Comment!!!'
       end
     end
@@ -73,14 +71,16 @@ RSpec.describe 'Comments', type: :request do
     context 'as an unauthorized user' do
       it 'does not update a comment' do
         sign_in other_user
-        patch post_comment_path(post_id: post.id, id: comment.id), params: { comment: update_comment }
+        patch post_comment_path(post_id: post.id, id: comment.id),
+              params: { comment: update_comment }
         expect(comment.reload.comment).to eq 'testtest'
       end
     end
 
     context 'as a guest' do
       before do
-        patch post_comment_path(post_id: post.id, id: comment.id), params: { comment: update_comment }
+        patch post_comment_path(post_id: post.id, id: comment.id),
+              params: { comment: update_comment }
       end
 
       it 'does not update a comment' do
@@ -95,7 +95,6 @@ RSpec.describe 'Comments', type: :request do
         expect(response).to redirect_to new_user_session_path
       end
     end
-
   end
 
   describe '#edit' do
@@ -103,7 +102,7 @@ RSpec.describe 'Comments', type: :request do
     let(:other_user)     { create(:user) }
     let(:post)           { create(:post) }
     let(:comment)        { create(:comment, post_id: post.id, user_id: user.id) }
-    let(:other_comment)  { create(:comment, post_id: post.id, user_id: other_user.id)}
+    let(:other_comment)  { create(:comment, post_id: post.id, user_id: other_user.id) }
 
     context 'as an authorized user' do
       it 'responds successfully' do
@@ -139,31 +138,27 @@ RSpec.describe 'Comments', type: :request do
         expect(response).to redirect_to new_user_session_path
       end
     end
-
   end
 
   describe '#destroy' do
-    let(:user)           { create(:user) }
-    let!(:other_user)     { create(:user) }
+    let(:user) { create(:user) }
+    let!(:other_user) { create(:user) }
     let!(:post)          { create(:post) }
     let!(:comment)       { create(:comment, post_id: post.id, user_id: user.id) }
-    let!(:other_comment)  { create(:comment, post_id: post.id, user_id: other_user.id)}
+    let!(:other_comment) { create(:comment, post_id: post.id, user_id: other_user.id) }
 
     context 'as an authorized user' do
-
       it 'deletes a comment' do
         sign_in user
         expect do
           delete post_comment_path(post_id: post.id, id: comment.id)
         end.to change(user.comments, :count).by(-1)
       end
-
     end
 
     context 'as an unauthorized user' do
-
       before { sign_in user }
-      
+
       it 'does not delete the comment' do
         expect do
           delete post_comment_path(post_id: post.id, id: other_comment.id)

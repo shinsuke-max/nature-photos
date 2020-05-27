@@ -2,9 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Likes', type: :request do
   describe '#create' do
-
     context 'as an authorized user' do
-
       context 'with valid attributes' do
         it 'adds a like' do
           user = create(:user)
@@ -25,14 +23,12 @@ RSpec.describe 'Likes', type: :request do
           sign_in user
           expect do
             post post_likes_path(post_id: post.id), params: { like: like }, xhr: true
-          end.to_not change(user.comments, :count)
+          end.not_to change(user.comments, :count)
         end
       end
-
     end
 
     context 'as an unauthorized user' do
-
       it 'does not add a like' do
         user = create(:user)
         other_user = create(:user)
@@ -41,9 +37,8 @@ RSpec.describe 'Likes', type: :request do
         sign_in user
         expect do
           post post_likes_path(post_id: post.id), params: { like: like }, xhr: true
-        end.to_not change(user.comments, :count)
+        end.not_to change(user.comments, :count)
       end
-
     end
 
     context 'as a guest' do
@@ -53,13 +48,12 @@ RSpec.describe 'Likes', type: :request do
         like = attributes_for(:like, post_id: post.id, user_id: user.id)
         expect do
           post post_likes_path(post_id: post.id), params: { like: like }
-        end.to_not change(user.comments, :count)
+        end.not_to change(user.comments, :count)
       end
     end
   end
 
   describe '#destroy' do
-
     context 'as an authorized user' do
       it 'deletes a like' do
         user = create(:user)
@@ -73,7 +67,6 @@ RSpec.describe 'Likes', type: :request do
     end
 
     context 'as an unauthorized user' do
-
       it 'does not delete the like' do
         user = create(:user)
         other_user = create(:user)
