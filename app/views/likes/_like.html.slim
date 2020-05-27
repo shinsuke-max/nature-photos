@@ -1,0 +1,10 @@
+th
+  - if post.liked_by(current_user).present?
+    = link_to "いいね！を取り消す", post_like_path(post.id, post.liked_by(current_user)),
+      method: :delete, remote: true
+  - else
+    = link_to "いいね！する", post_likes_path(post), method: :post,
+      remote: true
+td
+  = like.count
+  |  いいね！
