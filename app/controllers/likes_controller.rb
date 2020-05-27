@@ -7,11 +7,11 @@ class LikesController < ApplicationController
     @like = current_user.likes.build(like_params)
     @post = @like.post
     if @like.save
-      flash[:notice] = 'いいね！しました'
+      respond_to :js
     else
       flash[:alert] = 'いいねできませんでした'
+      redirect_to @post
     end
-    redirect_to @post
   end
 
   def destroy
@@ -19,11 +19,11 @@ class LikesController < ApplicationController
     @post = @like.post
     if @like.user == current_user
       @like.destroy!
-      flash[:notice] = 'いいねが取り消されました'
+      respond_to :js
     else
       flash[:alert] = 'いいねの削除に失敗しました'
+      redirect_to @post
     end
-    redirect_to @post
   end
 
   private
